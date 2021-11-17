@@ -1,5 +1,4 @@
 import server from './services/server';
-import { connectToDB } from './services/dbMongo';
 import cluster from 'cluster';
 import { Argumentos } from './middleware/args';
 import os from 'os';
@@ -25,6 +24,7 @@ if (clusterMode && cluster.isMaster) {
   });
 } else {
   server.listen(puerto, () =>
+
   logger.info(
       `Servidor express escuchando en el puerto ${puerto} - PID WORKER ${process.pid}`
     )

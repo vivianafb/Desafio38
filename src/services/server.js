@@ -7,6 +7,14 @@ import MongoStore from 'connect-mongo';
 import Config from '../config';
 import passport from '../middleware/auth';
 import { logger } from '../utils/logs';
+import { graphqlHTTP } from 'express-graphql';
+import { graphqlRoot, graphqlSchema } from './graphql';
+
+const app = express();
+const publicPath = path.resolve(__dirname, '../../public');
+app.use(express.static(publicPath));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const StoreOptions = {
@@ -22,16 +30,20 @@ const StoreOptions = {
       maxAge: Config.SESSION_COOKIE_TIMEOUT_MIN * 60 * 1000,
     },
   };
-const app = express();
+
+app.use(
+    '/graphql',
+    graphqlHTTP({
+      schema: graphqlSchema,
+      rootValue: graphqlRoot,
+      graphiql: true,
+    }),
+  );
 app.use(session(StoreOptions));
 
-const publicPath = path.resolve(__dirname, '../../public');
-app.use(express.static(publicPath));
-app.use(express.json());
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.urlencoded({ extended: true }));
-
 
 app.use(function(err,req,res,next){
   logger.error(`HUBO UN ERROR ${err.message}`);

@@ -76,6 +76,21 @@ class Producto{
         data: await productsAPI.getProducts(),
         });
     }
+
+    
+
+    async addProductoGraph(args)  {
+        const producto = args.productos;
+      
+        producto.nombre =productos.nombre;
+        producto.precio =productos.precio;
+        producto.descripcion =productos.descripcion;
+        producto.codigo =productos.codigo;
+        producto.foto =productos.foto;
+        producto.stock = productos.stock;
+      
+        return productos;
+      };
     async addProducto(req, res){      
         const newItem = await productsAPI.addProduct(req.body)
         console.log(newItem)
