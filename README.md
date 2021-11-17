@@ -13,7 +13,7 @@ Graphiql: http://localhost:8080/graphql
 
 
 mutation {
-  addProductoGraph(nombre: "Producto1", precio: 1000, descripcion: "Producto1", codigo: 1, foto: "foto.jps", stock: 12) {
+  addProductoGraph(nombre: "Producto1", precio: 1000, descripcion: "Producto1", codigo: 1, foto: "foto.jpg", stock: 12) {
     nombre
     precio
     descripcion
