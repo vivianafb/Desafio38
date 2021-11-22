@@ -3,12 +3,13 @@ import cluster from 'cluster';
 import { Argumentos } from './middleware/args';
 import os from 'os';
 import { logger } from './utils/logs';
-
+import { getProducto,addProduct,deleteProduct } from './routes/axios/axios';
 const clusterMode = Argumentos;
 const puerto = process.env.PORT;
 
-
-
+// getProducto();
+// addProduct();
+deleteProduct();
 const numCPUs = os.cpus().length;
 if (clusterMode && cluster.isMaster) {
    logger.info(`NUMERO DE CPUS ===> ${numCPUs}`);
