@@ -45,7 +45,8 @@ class Producto{
           });
         }
         next();
-      }
+    }
+
     async getProducto(req, res){
         const { id } = req.params;
         const { nombre, precio } = req.query;
@@ -76,7 +77,6 @@ class Producto{
         data: await productsAPI.getProducts(),
         });
     }
-
     
     async addProducto(req, res){      
         const newItem = await productsAPI.addProduct(req.body)
@@ -85,6 +85,7 @@ class Producto{
             msg: "Productos agregado con exito"
         })
     }
+    
     async updateProducto(req, res){
         const id = req.params.id;
 

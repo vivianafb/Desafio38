@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { productoController } from '../../controllers/productoController';
 
 export const getProducto = () => {
     axios
@@ -12,6 +11,7 @@ export const getProducto = () => {
       });
   };
 
+
 const url = 'http://localhost:8080/api/productos/agregar/';
 const data = {
   id:1, 
@@ -22,7 +22,6 @@ const data = {
   foto:'https://AXIOS.jpg',
   stock:2
 }
-
 const funcionAsync = async () => {
   try {
     const resp = await axios.post(url, data);
@@ -31,7 +30,6 @@ const funcionAsync = async () => {
     console.log(err);
   }
 };
-
 export const addProduct = () => funcionAsync();
 
 
@@ -45,5 +43,4 @@ const funcionAsyncDelete = async () => {
     console.log(err);
   }
 };
-
 export const deleteProduct = () => funcionAsyncDelete();
