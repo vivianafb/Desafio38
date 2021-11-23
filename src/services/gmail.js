@@ -22,7 +22,7 @@ export class Gmail {
       },
     });
 
-    this.transporter.verify();
+    // this.transporter.verify();
   }
 
   async sendEmail(dest, subject, content,attachment) {

@@ -1,16 +1,19 @@
-// import mongoose from 'mongoose';
-// import Config from '../config';
+import mongoose, {Connection} from 'mongoose';
+import Config from '../config';
 
+mongoose.Promise = global.Promise;
 
-// export const connectToDB = async () => {
-//   try {
-//     const srv = Config.MONGO_ATLAS_URL
-//     await mongoose.connect(srv, {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true
-//     });
-//   } catch (error) {
-//     console.log(`ERROR => ${error}`);
-//     return error;
-//   }
-// };
+export class connectToDB  {
+  uri;
+  Connection;
+  instance
+  constructor(){
+    this.uri = Config.MONGO_ATLAS_URL;
+    this.instance = 0;
+  }
+
+  getConnection() {
+    if (!this.Connection) this.Connection = mongoose.createConnection(this.uri);
+    return this.Connection;
+  }
+};

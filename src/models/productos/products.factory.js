@@ -24,7 +24,7 @@ export class NoticiasFactoryDAO {
         return new ProductosFSDAO(filePath);
 
       case TipoPersistencia.MongoAtlas:
-        logger.info('RETORNANDO INSTANCIA CLASE MONGO ATLAS');
+        logger.info('RETORNANDO INSTANCIA CLASE MONGO ATLAS DE PRODUCTO');
         return new ProductosAtlasDAO();
 
       case TipoPersistencia.LocalMongo:

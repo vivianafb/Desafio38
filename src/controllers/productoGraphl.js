@@ -7,5 +7,7 @@ export const getProductosGraph = () => {
 
 export const addProductoGraph = (args) =>{
     const newItem =  productsAPI.addProduct(args)
-    return newItem
+    res.json({
+        msg: "Productos agregado con exito"
+    })
 };

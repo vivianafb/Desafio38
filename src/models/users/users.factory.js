@@ -2,10 +2,6 @@ import { UsuarioAtlasDAO } from "./DAOs/mongo";
 import {logger}  from '../../utils/logs'
 
 export const TipoPersistencia = {
-    Memoria : "MEM",
-    FileSystem : "FS",
-    MYSQL : "MYSQL",
-    SQLITE3 : "SQLITE3",
     LocalMongo : "LOCAL-MONGO",
     MongoAtlas : "MONGO-ATLAS",
   }
@@ -14,11 +10,11 @@ export class userFactoryDAO {
   static get(tipo) {
     switch (tipo) {
       case TipoPersistencia.MongoAtlas:
-        console.log('RETORNANDO INSTANCIA CLASE MONGO ATLAS');
+        logger.info('RETORNANDO INSTANCIA CLASE MONGO ATLAS DE USUARIO');
         return new UsuarioAtlasDAO();
 
       case TipoPersistencia.LocalMongo:
-        console.log('RETORNANDO INSTANCIA CLASE MONGO LOCAL');
+        logger.info('RETORNANDO INSTANCIA CLASE MONGO LOCAL');
         return new UsuarioAtlasDAO(true);
         
     default:

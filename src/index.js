@@ -9,7 +9,7 @@ const puerto = process.env.PORT;
 
 // getProducto();
 // addProduct();
-deleteProduct();
+// deleteProduct();
 const numCPUs = os.cpus().length;
 if (clusterMode && cluster.isMaster) {
    logger.info(`NUMERO DE CPUS ===> ${numCPUs}`);

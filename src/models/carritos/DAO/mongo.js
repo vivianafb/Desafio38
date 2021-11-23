@@ -25,7 +25,7 @@ export class CarritoAtlasDAO{
        this.srv = `mongodb://localhost:27017/${Config.MONGO_LOCAL_DBNAME}`;
      else
        this.srv = Config.MONGO_ATLAS_URL;
-     mongoose.connect(this.srv);
+    //  mongoose.connect(this.srv);
      this.carrito = mongoose.model('carritos', carritoSchema);
    }
    async get(userId) {

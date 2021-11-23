@@ -26,7 +26,7 @@ export class FactoryDAO {
         return new CarritoFSDAO(filePath);
 
       case TipoPersistencia.MongoAtlas:
-        logger.info('RETORNANDO INSTANCIA CLASE MONGO ATLAS');
+        logger.info('RETORNANDO INSTANCIA CLASE MONGO ATLAS DE CARRITO');
         return new CarritoAtlasDAO();
 
       case TipoPersistencia.LocalMongo:
