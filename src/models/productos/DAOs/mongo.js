@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import Config from '../../../config/index'
-import {connectToDB} from '../../../services/dbMongo'
 
 const productsSchema = new mongoose.Schema({
   nombre: {type: String, required: true},
@@ -10,17 +9,18 @@ const productsSchema = new mongoose.Schema({
   foto: {type: String, required:true},
   stock: {type: Number, required:true}
 });
-const MongoAtlas = new connectToDB();
-const AtlasMongoose = MongoAtlas.getConnection();
-export const Producto = AtlasMongoose.model('productos', productsSchema);
-
 export class ProductosAtlasDAO  {
    srv;
    productos;
-   constructor(local) {
-    this.productos = AtlasMongoose.model('productos', productsSchema);;
-  }
 
+   constructor(local) {
+    if (local)
+      this.srv = `mongodb://localhost:27017/${Config.MONGO_LOCAL_DBNAME}`;
+    else
+      this.srv = Config.MONGO_ATLAS_URL;
+    mongoose.connect(this.srv);
+    this.productos = mongoose.model('productos', productsSchema);
+  }
   async get(id) {
     let output = [];
     try {
@@ -65,4 +65,3 @@ export class ProductosAtlasDAO  {
   }
 }
 
-export const Product = mongoose.model('productos', productsSchema);

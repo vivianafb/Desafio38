@@ -1,4 +1,4 @@
-import { FactoryDAO } from '../models/carritos/carrito.factory';
+import { FactoryDAO,Singleton } from '../models/carritos/carrito.factory';
 import { TipoPersistencia } from '../models/carritos/carrito.factory';
 import { logger } from '../utils/logs';
 import { productsAPI } from './productos';
@@ -7,7 +7,9 @@ import { UserAPI } from './user';
 /**
  * Con esta variable elegimos el tipo de persistencia
  */
+
 const tipo = TipoPersistencia.MongoAtlas;
+
 
 class carAPI {
     carrito;

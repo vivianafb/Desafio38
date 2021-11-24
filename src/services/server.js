@@ -18,7 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 
 const advancedOptions = { useNewUrlParser: true, useUnifiedTopology: true };
 const StoreOptions = {
-  
+    store: MongoStore.create({
+      mongoUrl: Config.MONGO_ATLAS_URL,
+      mongoOptions: advancedOptions,
+    }),
   
     secret: Config.SESSION_SECRET,
     resave: false,
@@ -33,7 +36,7 @@ app.use(
       graphiql: true,
     }),
   );
- app.use(session(StoreOptions));
+app.use(session(StoreOptions));
 
 
 app.use(passport.initialize());

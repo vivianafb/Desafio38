@@ -13,35 +13,57 @@ export const TipoPersistencia = {
   SQLITE3 : "SQLITE3",
   LocalMongo : "LOCAL-MONGO",
   MongoAtlas : "MONGO-ATLAS",
+  Firebase : "FIREBASE",
 }
-const tipo = TipoPersistencia;
+
 export class NoticiasFactoryDAO {
+  static instancia;
+
   static get(tipo) {
     switch (tipo) {
       case TipoPersistencia.FileSystem:
-        logger.info('RETORNANDO INSTANCIA CLASE FS');
+        if(!this.instancia) 
+        logger.info('Instancia Nula. Inicializandola');
         const filePath = path.resolve(__dirname, './DAOs/products.json');
-        return new ProductosFSDAO(filePath);
+        logger.info('RETORNANDO INSTANCIA CLASE FS');
+        return this.instancia = new ProductosFSDAO(filePath);
+        
 
       case TipoPersistencia.MongoAtlas:
+        if(!this.instancia) 
+        logger.info('Instancia Nula. Inicializandola');
         logger.info('RETORNANDO INSTANCIA CLASE MONGO ATLAS DE PRODUCTO');
-        return new ProductosAtlasDAO();
+        return this.instancia = new ProductosAtlasDAO();
+        
 
       case TipoPersistencia.LocalMongo:
+        if(!this.instancia) 
+        logger.info('Instancia Nula. Inicializandola');
         logger.info('RETORNANDO INSTANCIA CLASE MONGO LOCAL');
-        return new ProductosAtlasDAO(true);
+        return this.instancia = new ProductosAtlasDAO(true);
+        
+
 
       case TipoPersistencia.MYSQL:
+        if(!this.instancia) 
+        logger.info('Instancia Nula. Inicializandola');
         console.log('RETORNANDO INSTANCIA CLASE MYSQL/MariDB LOCAL');
-        return new ProductosSQLDAO();
+        return this.instancia = new ProductosSQLDAO();
+
 
       case TipoPersistencia.SQLITE3:
+        if(!this.instancia) 
+        logger.info('Instancia Nula. Inicializandola');
         logger.info('RETORNANDO INSTANCIA CLASE SQLITE');
-        return new ProductosSQLITEDAO();
+        return this.instancia = new ProductosSQLITEDAO();
+
     
       default:
+        if(!this.instancia) 
+        logger.info('Instancia Nula. Inicializandola');
         logger.info('RETORNANDO INSTANCIA CLASE MEMORIA');
-        return new ProductosMemDAO();
+        return this.instancia = new ProductosMemDAO();
     }
   }
 }
+ NoticiasFactoryDAO.get(TipoPersistencia.MongoAtlas);
