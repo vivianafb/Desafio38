@@ -8,9 +8,9 @@ const clusterMode = Argumentos;
 const puerto = process.env.PORT;
 
 
- getProduct()
-// addProduct();
-// deleteProduct();
+getProduct()
+addProduct();
+deleteProduct();
 const numCPUs = os.cpus().length;
 if (clusterMode && cluster.isMaster) {
    logger.info(`NUMERO DE CPUS ===> ${numCPUs}`);
