@@ -1,44 +1,41 @@
 import axios from 'axios';
 
-export const getProducto = () => {
-    axios
-      .get('http://localhost:8080/api/productos/')
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  };
+ const getProducto = async (id) => {
+  const result = await axios.get('http://localhost:8080/api/productos/',null,{params:{
+    id
+  }})
+  return result
+};
+  export const getProduct = () => getProducto();
 
 
 const url = 'http://localhost:8080/api/productos/agregar/';
-const data = {
-  id:1, 
-  nombre:'DATA AXIOS', 
-  precio:1245, 
-  descripcion:'AXIOSSSS',
-  codigo:765556,
-  foto:'https://AXIOS.jpg',
-  stock:2
-}
-const funcionAsync = async () => {
+
+const agregarProduct = async (data) => {
   try {
-    const resp = await axios.post(url, data);
-    console.log(resp.data);
+    const result = await axios.post('http://localhost:8080/api/productos/agregar/',data)
+    return result;
   } catch (err) {
     console.log(err);
   }
 };
-export const addProduct = () => funcionAsync();
+export const addProduct = () => agregarProduct();
 
-
-const url2 = 'http://localhost:8080/api/productos/borrar/619aeb1566c5077058f3170c';
-const data2 ='619aeb1566c5077058f3170c'
-const funcionAsyncDelete = async () => {
+const actualizarProduct = async (id) => {
   try {
-    const resp = await axios.delete(`${url2}`);
-    console.log(resp.data);
+    const result = await axios.put('http://localhost:8080/api/productos/actualizar/',id)
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};
+export const updateProduct = () => actualizarProduct();
+
+
+const funcionAsyncDelete = async (id) => {
+  try {
+    const result = await axios.delete('http://localhost:8080/api/productos/borrar',id);
+    return result;
   } catch (err) {
     console.log(err);
   }

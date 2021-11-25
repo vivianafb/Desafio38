@@ -3,11 +3,12 @@ import cluster from 'cluster';
 import { Argumentos } from './middleware/args';
 import os from 'os';
 import { logger } from './utils/logs';
-import { getProducto,addProduct,deleteProduct } from './routes/axios/axios';
+import { getProduct,addProduct,deleteProduct } from './routes/axios/axios';
 const clusterMode = Argumentos;
 const puerto = process.env.PORT;
 
-// getProducto();
+
+ getProduct()
 // addProduct();
 // deleteProduct();
 const numCPUs = os.cpus().length;

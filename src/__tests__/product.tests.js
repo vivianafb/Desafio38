@@ -1,12 +1,10 @@
 import supertest from 'supertest';
 import mongoose from 'mongoose';
 import {connectToDB} from '../services/dbMongo'
-
+import {getProduct,addProduct,updateProduct,deleteProduct} from '../routes/axios/axios'
 import server from '../services/server';
-import { expect } from 'chai';
-import {Producto} from '../models/productos/DAOs/mongo'
-
-
+// import { expect } from 'chai';
+import axios from 'axios';
 describe('Test Productos', () => {
   let newMongo;
   let request;
@@ -40,119 +38,136 @@ describe('Test Productos', () => {
   //   expect(response.body).to.deep.equal(expectedResponse);
   // });
   
-  test('Deberia recibir una lista de productos: GET /  ', async () => {
-    const response = await request.get(`/api/productos`);
+  // test('Deberia recibir una lista de productos: GET /  ', async () => {
+  //   const expectedValue = {
+  //     __v: 0,
+  //     _id: "619d450dfd44900905492464",
+  //      nombre:"Obtener producto", 
+  //      precio:100, 
+  //      descripcion:"Get",
+  //      codigo:123456,
+  //      foto:"jpg",
+  //      stock:27
+  //   };
+  //   const miAxios = jest.spyOn(axios, 'get').mockImplementation(() => {
+  //     return new Promise((resolve) => {
+  //       resolve({
+  //         data: expectedValue,
+  //       });
+  //     });
+  //   });
 
-    const expectedResponse = {
-      data: response.body.data
-    };
+  //   const axiosResponse = await getProduct()
+  //   expect(miAxios).toHaveBeenCalled();
+  //   expect(axiosResponse).toEqual(expectedValue);
+  // });
+
+
+//  test('Deberia recibir un producto: GET /:id  ', async () => {
+  //   const expectedValue = [{
+  //     __v: 0,
+  //      _id: "619d45b5318dc384b7694817",
+  //       nombre:"Obtener producto", 
+  //       precio:100, 
+  //       descripcion:"Get",
+  //       codigo:123456,
+  //       foto:"jpg",
+  //       stock:27
+  //  }];
+
+//     const miAxios = jest.spyOn(axios, 'get').mockImplementation(() => {
+//       return new Promise((resolve) => {
+//         resolve({
+//           data: expectedValue,
+//         });
+//       });
+//     });
+//     const id = '619d45b5318dc384b7694817';
+//     const axiosResponse = await getProduct(id);
     
-    expect(response.body).to.deep.equal(expectedResponse);
-  });
-
-
- test('Deberia recibir un producto: GET /:id  ', async () => {
-    const mockData = [{
-      __v: 0,
-       _id: "619d450dfd44900905492464",
-        nombre:"aaaa", 
-        precio:100, 
-        descripcion:"aaa rojo",
-        codigo:123456,
-        foto:"jpg",
-        stock:27
-   }];
-
-    jest
-      .spyOn(Producto, 'find')
-      .mockImplementationOnce(() => Promise.resolve(mockData));
-
-    const expectedResponse = {
-      data: mockData,
-    };
-    const response = await request.get('/api/productos');
-    const id = response.body.data[0]._id;
-    const productId = await request.get(`/api/productos/${id}`);
-    expect(productId.body).to.deep.equal(expectedResponse);
-  });
+//     expect(axiosResponse.data[0]._id).toEqual(id);
+//     expect(axiosResponse.data).toEqual(expectedValue);
+//   });
 
 
 
-  test('Deberia almacenar un producto correctamente, POST /agregar',async () => {
-    jest.spyOn(Producto.prototype, 'save').mockResolvedValueOnce('ok');
-    const mockProductos ={nombre:'lapiz', precio:100, descripcion:'color rojo',codigo:123456,foto:'jpg',stock:27,
-    };
-    const response = await request.post('/api/productos/agregar').send(mockProductos);
-    expect(response.status).to.eql(200);
+  // test('Deberia almacenar un producto correctamente, POST /agregar',async () => {
+  //   const expectedValue = [{
+  //     __v: 0,
+  //      _id: "619d45b5318dc384b7694817",
+  //       nombre:"Agregar producto", 
+  //       precio:100, 
+  //       descripcion:"Add",
+  //       codigo:123456,
+  //       foto:"jpg",
+  //       stock:27
+  //  }];
+  //   const miAxios = jest.spyOn(axios, 'post').mockImplementation(() => {
+  //       return new Promise((resolve) => {
+  //         resolve({
+  //           data: expectedValue,
+  //         });
+  //       });
+  //   });
 
-    const expectedBody = {
-      msg: "Productos agregado con exito"
-    };
+  //   const axiosResponse = await addProduct(expectedValue);
 
-   
-    expect(response.body).to.deep.equal(expectedBody);
+  //   expect(miAxios).toHaveBeenCalled();
+  //   expect(axiosResponse.data).toEqual(expectedValue);
     
-  });
+  // });
 
   
   
-  test('Deberia modificar un producto correctamente, PUT /actualizar/:id',async() =>{
+  // test('Deberia modificar un producto correctamente, PUT /actualizar/:id',async() =>{
 
-    const mockProducto = [{
+  //   const expectedValue = [{
+  //           __v: 0,
+  //            _id: "619d45b5318dc384b7694817",
+  //             nombre:"Producto actualizado", 
+  //             precio:100, 
+  //             descripcion:"Update",
+  //             codigo:123456,
+  //             foto:"jpg",
+  //             stock:27
+  //        }];
+  //     const miAxios = jest.spyOn(axios, 'put').mockImplementation(() => {
+  //       return new Promise((resolve) => {
+  //         resolve({
+  //           data: expectedValue,
+  //         });
+  //       });
+  //   });
+  //   const id = '619d45b5318dc384b7694817';
+  //   const axiosResponse = await updateProduct(id);
+  //   expect(miAxios).toHaveBeenCalled();
+  //   expect(axiosResponse.data[0]._id).toEqual(id);
+  //   expect(axiosResponse.data).toEqual(expectedValue);
+  // })
+
+  test('Eliminar un producto correctamente, DELETE /borrar/:id',async() =>{
+    const expectedValue = [{
             __v: 0,
-             _id: "619d450dfd44900905492464",
-              nombre:"aaaa", 
+             _id: "619d45b5318dc384b7694817",
+              nombre:"Producto Eliminado", 
               precio:100, 
-              descripcion:"aaa rojo",
+              descripcion:"Delete",
               codigo:123456,
               foto:"jpg",
               stock:27
          }];
-    jest
-    .spyOn(Producto, 'find')
-    .mockImplementationOnce(() => Promise.resolve(mockProducto) )
+        const miAxios = jest.spyOn(axios, 'delete').mockImplementation(() => {
+        return new Promise((resolve) => {
+          resolve({
+            data: expectedValue,
+          });
+        });
+    });
 
-    const getProducto = await request.get('/api/productos');
-    const getId = getProducto.body.data[0]._id;
-
-    const mockProductoUpdate =[{nombre:'TEST'}];
-
-    const response = await request.put(`/api/productos/actualizar/${getId}`).send(mockProductoUpdate);
-     expect(response.status).to.eql(200);
-
-    const expectedBody = {
-      msg: "Actualizando los productos"
-    };
-
-    expect(response.body).to.deep.equal(expectedBody);
-  })
-
-  test('Eliminar un producto correctamente, DELETE /borrar/:id',async() =>{
-    const mockProducto = [{
-      __v: 0,
-       _id: "619d450dfd44900905492464",
-        nombre:"aaaa", 
-        precio:100, 
-        descripcion:"aaa rojo",
-        codigo:123456,
-        foto:"jpg",
-        stock:27
-   }];
-    jest
-    .spyOn(Producto, 'find')
-    .mockImplementationOnce(() => Promise.resolve(mockProducto) )
-
-    const getProducto = await request.get('/api/productos');
-    const getId = getProducto.body.data[0]._id;
-    const response = await request.delete(`/api/productos/borrar/${getId}`);
-
-    expect(response.status).to.eql(200);
-
-    const expectedBody = {
-      msg: "Producto eliminado"
-    };
-
-    expect(response.body).to.deep.equal(expectedBody);
+    const id = '619d45b5318dc384b7694817';
+    const axiosResponse = await deleteProduct(id);
+    expect(miAxios).toHaveBeenCalled();
+    expect(axiosResponse.data).toEqual(expectedValue);
 
   })
 });
