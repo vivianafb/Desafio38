@@ -24,20 +24,7 @@ describe('Test Productos', () => {
 
   });
 
-  test('Deberia recibir un array vacio si no existen productos', async () => {
-    const mockData = [];
 
-    jest
-      .spyOn(Producto, 'find')
-      .mockImplementationOnce(() => Promise.resolve(mockData));
-
-    const expectedResponse = {
-      data: mockData,
-    };
-    const response = await request.get('/api/productos');
-    expect(response.body).to.deep.equal(expectedResponse);
-  });
-  
   test('Deberia recibir una lista de productos: GET /  ', async () => {
     const expectedValue = {
       __v: 0,
@@ -59,7 +46,7 @@ describe('Test Productos', () => {
 
     const axiosResponse = await getProduct()
     expect(miAxios).toHaveBeenCalled();
-    expect(axiosResponse).toEqual(expectedValue);
+    expect(axiosResponse.data).toEqual(expectedValue);
   });
 
 
