@@ -58,8 +58,8 @@ const messages = [];
 
 myWSServer.on('connection',  (socket) =>{
   // console.log('\nUn cliente se ha conectado');
-    // console.log(`ID DEL SOCKET DEL CLIENTE => ${socket.client.id}`);
-    // console.log(`ID DEL SOCKET DEL SERVER => ${socket.id}`);
+  //   console.log(`ID DEL SOCKET DEL CLIENTE => ${socket.client.id}`);
+  //   console.log(`ID DEL SOCKET DEL SERVER => ${socket.id}`);
 
   socket.on('new-message',  (data)=> {
     const newMessage = {

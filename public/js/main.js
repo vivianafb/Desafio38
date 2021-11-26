@@ -69,7 +69,7 @@ function outputRoomName(room) {
 }
 
 function outputUsers(users) {
-  const arrayofUsers = users.map((aUser) => `<li>${aUser.email}</li>`);
+  const arrayofUsers = users.map((aUser) => `<li>${aUser.username}</li>`);
   console.log(arrayofUsers);
   usersList.innerHTML = arrayofUsers.join('');
 }
