@@ -1,26 +1,9 @@
-
+import productDTO from '../DTO/producto'
   export class ProductosMemDAO {
      productos = [];
   
     constructor() {
-      const mockData = [
-        {id:1, 
-          nombre:"lapiz", 
-          precio:100, 
-          descripcion:"color rojo",
-          codigo:123456,
-          foto:"https://img.freepik.com/vector-gratis/diseno-lapiz-escribiendo_1095-187.jpg?size=338&ext=jpg",
-          stock:27,
-          timestamp:Date.now()},
-      {id:2, 
-          nombre:"goma", 
-          precio:200, 
-          descripcion:"goma de borrar",
-          codigo:789123,
-          foto:"https://www.libreriaservicom.cl/wp-content/uploads/2019/03/goma-de-borrar-factis-s20.jpg",
-          stock:30,
-          timestamp:Date.now()}
-      ];
+      const mockData = [];
   
       mockData.forEach((aMock) => this.productos.push(aMock));
     }
@@ -53,10 +36,10 @@
         foto: data.foto,
         stock: data.stock
       };
+      // const dtoproduct = productDTO(newItem)
+      const dtoproduct =this.productos.push(newItem);
   
-      this.productos.push(newItem);
-  
-      return newItem;
+      return new productDTO(dtoproduct);
     }
   
     async update(id, newProductData) {

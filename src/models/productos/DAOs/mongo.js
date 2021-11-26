@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Config from '../../../config/index'
 import {connectToDB} from '../../../services/dbMongo'
-
+import productoDTO from '../DTO/producto'
 const productsSchema = new mongoose.Schema({
   nombre: {type: String, required: true},
   precio: {type: Number, required:true},
@@ -10,15 +10,18 @@ const productsSchema = new mongoose.Schema({
   foto: {type: String, required:true},
   stock: {type: Number, required:true}
 });
-const MongoAtlas = new connectToDB();
-const AtlasMongoose = MongoAtlas.getConnection();
-export const Producto = AtlasMongoose.model('productos', productsSchema);
 
 export class ProductosAtlasDAO  {
-   srv;
+ srv;
    productos;
+
    constructor(local) {
-    this.productos = AtlasMongoose.model('productos', productsSchema);;
+    if (local)
+      this.srv = `mongodb://localhost:27017/${Config.MONGO_LOCAL_DBNAME}`;
+    else
+      this.srv = Config.MONGO_ATLAS_URL;
+    mongoose.connect(this.srv);
+    this.productos = mongoose.model('productos', productsSchema);
   }
 
   async get(id) {
@@ -38,8 +41,6 @@ export class ProductosAtlasDAO  {
   }
 
    async add(data) {
-    // if (!data.nombre || !data.precio || !data.descripcion
-    //   || !data.codigo || !! data.foto || !data.stock) throw new Error('invalid data');
     const newProduct = new this.productos(data);
     await newProduct.save();
 

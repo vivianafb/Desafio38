@@ -82,7 +82,8 @@ class Producto{
         const newItem = await productsAPI.addProduct(req.body)
         // console.log(newItem)
         res.json({
-            msg: "Productos agregado con exito"
+            msg: "Productos agregado con exito",
+            data: newItem
         })
     }
     

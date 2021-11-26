@@ -5,7 +5,7 @@ import { logger } from '../utils/logs';
 /**
  * Con esta variable elegimos el tipo de persistencia
  */
-const tipo = TipoPersistencia.MongoAtlas;
+const tipo = TipoPersistencia.Memoria;
 
 class prodAPI {
     productos;
@@ -22,7 +22,7 @@ class prodAPI {
 
   async addProduct(productData) {
     const newProduct = await this.productos.add(productData);
-    logger.info(newProduct)
+    // logger.info(newProduct)
     return newProduct;
   }
 

@@ -5,7 +5,7 @@ import { carritoAPI } from './carrito';
 /**
  * Con esta variable elegimos el tipo de persistencia
  */
-const tipo = TipoPersistencia.MongoAtlas;
+const tipo = TipoPersistencia.Memoria;
 
 class User {
      users;
