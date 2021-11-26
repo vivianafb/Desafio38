@@ -1,11 +1,10 @@
 import socketIo from 'socket.io';
-import { getAllMessages, addMessage } from '../models/messages';
 import { formatMessages } from '../utils/messages';
 import {
   getCurrentUser,
   removeUser,
 } from '../utils/users';
-
+import {mensajesAPI} from '../apis/mensajes';
 
 const data = {
   email: undefined,
@@ -16,10 +15,11 @@ export const initWsServer = (server) => {
   const io = socketIo(server);
 
   io.on('connection', async (socket) => {
-     let msges = await getAllMessages();
+    console.log('Nueva Conexion establecida!');
+     let msges = await mensajesAPI.get();
      socket.emit('receiveMessages', msges);
-    socket.on('JoinRoom', (msg) => {
-   ocket.broadcast.emit('message', formatMessages(data));
+     socket.on('JoinRoom', (msg) => {
+     socket.broadcast.emit('message', formatMessages(data));
     
     });
 
@@ -27,15 +27,30 @@ export const initWsServer = (server) => {
       const user = getCurrentUser(socket.client.id);
       if (user) {
         removeUser(socket.client.id);
-        data.username = 'CHATBOT';
-        data.text = `${user.username} a dejado el chat`;
+        data.email = 'CHATBOT';
+        data.mensaje = `${user.email} a dejado el chat`;
         io.to(user.room).emit('message', formatMessages(data));
 
       }
     });
-    socket.on('newMessage', (msge) => {
-      addMessage(msge);
-      io.emit('newMessage', msge);
+
+    socket.on('newMessage', async (msge) => {
+      
+      mensajesAPI.save(msge)
+      .then(() => {
+          socket.emit('save message success', null);
+          mensajesAPI.get()
+            .then(msge => {
+                io.emit('messages', msge);
+              })
+              .catch(e => {
+                socket.emit('messages error', {
+                  error: e.error,
+                  message: e.message,
+                });
+            });
+        })
+       
     });
   });
 

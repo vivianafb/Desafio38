@@ -49,8 +49,8 @@ function outputMessage(message) {
   const div = document.createElement('div');
   div.classList.add('message');
   div.innerHTML = `
-  <p class="meta">${message.username} <span> ${message.time}</span> </p>
-  <p class="text"> ${message.text} </p>`;
+  <p class="meta">${message.email} <span> ${message.time}</span> </p>
+  <p class="text"> ${message.mensaje} </p>`;
 
   chatMessages.appendChild(div);
 }
@@ -69,7 +69,7 @@ function outputRoomName(room) {
 }
 
 function outputUsers(users) {
-  const arrayofUsers = users.map((aUser) => `<li>${aUser.username}</li>`);
+  const arrayofUsers = users.map((aUser) => `<li>${aUser.email}</li>`);
   console.log(arrayofUsers);
   usersList.innerHTML = arrayofUsers.join('');
 }

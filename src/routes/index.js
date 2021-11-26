@@ -7,6 +7,9 @@ import { isLoggedIn } from '../middleware/auth';
 
 
 const router = Router();
+router.get('/chat',(req,res) =>
+    res.render('main')
+);
 
 router.use('/auth', AuthRouter);
 router.use('/productos',productoRouter);
