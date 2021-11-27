@@ -1,8 +1,19 @@
 import dotenv from 'dotenv';
+import path from 'path';
+import minimist from 'minimist'
 dotenv.config();
 
+dotenv.config({
+  path: path.resolve(__dirname, process.env.NODE_ENV + '.env')
+})
+
+const args = minimist(process.argv.slice(2));
+
 const venv = {
-  PORT: process.env.PORT || 8080,
+  NODE_ENV: process.env.NODE_ENV || 'development',
+  MODO: process.env.MODO || 'cluster',
+  PORT: args.port || 8080,
+  TIPO_PERSISTENCIA: process.env.TIPO_PERSISTENCIA || 'memory',
   MONGO_ATLAS_URL: process.env.MONGO_ATLAS_SRV || 'mongoSRV',
   MONGO_ATLAS_USER: process.env.MONGO_ATLAS_USER || 'user',
   MONGO_ATLAS_PASSWORD: process.env.MONGO_ATLAS_PASSWORD || 'pasw',

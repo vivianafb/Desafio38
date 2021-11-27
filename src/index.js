@@ -7,7 +7,7 @@ import { args } from './middleware/args';
 const clusterMode = Argumentos;
 const puerto = process.env.PORT;
 
-console.log(args)
+
 const numCPUs = os.cpus().length;
 if (clusterMode && cluster.isMaster) {
    logger.info(`NUMERO DE CPUS ===> ${numCPUs}`);

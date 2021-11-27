@@ -6,6 +6,8 @@
   "scripts": {
     "transpile": "babel src --out-dir dist",
     "dev": "nodemon --exec babel-node ./src/index.js",
+    "development":"set NODE_ENV=development && npm run dev",
+    "production":"set NODE_ENV=production&& npm run dev",
     "start": "npm run transpile && node dist/index.js --cluster",
     "test": "jest --forceExit"
   },
